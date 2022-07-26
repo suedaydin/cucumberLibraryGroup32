@@ -18,8 +18,8 @@ import org.junit.runner.RunWith;
         glue="com/cydeo/library/step_definitions",
         dryRun = false,
         tags = "@librarian and @B26G32-106 and @B26G32-107"
-
 )
+
 public class CukesRunner {
 
 }

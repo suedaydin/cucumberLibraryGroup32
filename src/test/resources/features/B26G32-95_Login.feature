@@ -1,5 +1,5 @@
 Feature: User account tests
-  As a user, I should be able to login with different users using their correct emails and passwords.
+  As a user, I should be able to login with different users using their correct emails and passwords
 
   Background:
     Given user is on the loginPage
