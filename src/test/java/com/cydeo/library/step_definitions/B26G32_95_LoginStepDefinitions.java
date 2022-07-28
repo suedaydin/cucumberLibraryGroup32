@@ -2,8 +2,10 @@ package com.cydeo.library.step_definitions;
 
 import com.cydeo.library.pages.LoginPage;
 import com.cydeo.library.pages.UsersPage;
+import com.cydeo.library.utilities.BrowserUtils;
 import com.cydeo.library.utilities.ConfigurationReader;
 import com.cydeo.library.utilities.Driver;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -21,26 +23,46 @@ public class B26G32_95_LoginStepDefinitions {
     @Given("user is on the loginPage")
     public void user_is_on_the_login_page() {
         driver.get(ConfigurationReader.getProperty("qa2_url"));
+
     }
-    @Given("verify that the title is {string}")
-    public void verify_that_the_title_is(String expectedTitle) {
+
+    @And("verify that the title is {string} and verify the URL is {string}")
+    public void verifyThatTheTitleIsAndVerifyTheURLIs(String expectedTitle, String expectedURL) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
         wait.until(ExpectedConditions.titleIs(expectedTitle));
         Assert.assertTrue("Title verification failed!", expectedTitle.equals(driver.getTitle()));
+
+        wait.until(ExpectedConditions.urlToBe(expectedURL));
+        Assert.assertTrue("URL verification failed!", expectedURL.equals(driver.getCurrentUrl()));
     }
-    @When("librarian enters valid {string} and {string}")
-    public void librarian_enters_valid_and(String email, String password) {
+
+
+
+    @When("user enters valid {string} and {string}")
+    public void userEntersValidAnd(String email, String password) {
         loginPage.emailInput.sendKeys(email);
         loginPage.passwordInput.sendKeys(password);
+
     }
-    @When("librarian clicks sign in button")
-    public void librarian_clicks_sign_in_button() {
+
+    @And("user clicks sign in button")
+    public void userClicksSignInButton() {
         loginPage.signInBtn.click();
     }
-    @Then("verify that there are {int} modules on the page")
-    public void verify_that_there_are_modules_on_the_page(Integer numberOfModules) {
-        System.out.println("usersPage.librarianModules.size() = " + usersPage.librarianModules.size());
-        Assert.assertEquals("Number of modules verification failed!", (int)numberOfModules, usersPage.librarianModules.size());
+
+    @Then("verify that there are {int} or {int} modules on the page")
+    public void verifyThatThereAreOrModulesOnThePage(int numberOfModulesLibrarian, int numberOfModulesStudent) {
+        BrowserUtils.waitForVisibility(usersPage.userNameLink,10);
+        if(usersPage.userNameLink.getText().contains("Librarian")){
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
+            wait.until(ExpectedConditions.visibilityOfAllElements(usersPage.numberOfModules));
+            Assert.assertEquals("Number of modules for librarian verification failed!",numberOfModulesLibrarian, usersPage.numberOfModules.size());
+       }else{
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 15);
+            wait.until(ExpectedConditions.visibilityOfAllElements(usersPage.numberOfModules));
+            Assert.assertEquals("Number of modules for student verification failed!",numberOfModulesStudent, usersPage.numberOfModules.size());
+        }
     }
+
 
 }
