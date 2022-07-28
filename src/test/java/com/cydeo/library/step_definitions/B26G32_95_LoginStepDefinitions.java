@@ -65,4 +65,14 @@ public class B26G32_95_LoginStepDefinitions {
     }
 
 
+    @When("user enters invalid email {string} or password {string}")
+    public void userEntersInvalidEmailOrPassword(String invalidEmail, String invalidPassword) {
+        loginPage.emailInput.sendKeys(invalidEmail);
+        loginPage.passwordInput.sendKeys(invalidPassword);
+    }
+
+    @Then("user sees the error message {string}")
+    public void userSeesTheErrorMessage(String expectedErrorMessage) {
+        Assert.assertEquals("Message verification failed!", expectedErrorMessage, loginPage.actualErrorMessage.getText());
+    }
 }
