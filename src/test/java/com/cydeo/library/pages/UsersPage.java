@@ -14,6 +14,12 @@ public class UsersPage {
     }
 
     @FindBy (xpath = "//a[@class='nav-link']")
-    public List<WebElement> librarianModules;
+    public List<WebElement> numberOfModules;
+
+   @FindBy (id="navbarDropdown")
+    public WebElement userNameLink;
+
+
+
 
 }
