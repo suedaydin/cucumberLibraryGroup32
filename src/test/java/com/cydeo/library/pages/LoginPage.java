@@ -15,6 +15,9 @@ public class LoginPage {
     @FindBy(xpath = "//button")
     public WebElement signInBtn;
 
+    @FindBy(xpath = "//div[.='Sorry, Wrong Email or Password']")
+    public WebElement actualErrorMessage;
+
     public LoginPage() {
         PageFactory.initElements(Driver.getDriver(), this);
     }

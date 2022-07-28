@@ -138,3 +138,10 @@ Feature: User account tests
       | student58@library| WS3rm9xG |
       | student59@library| cJaTyCRJ |
       | student60@library| AoSFw44Y |
+
+      @B26G32-113 @B26G32-117 @negativeTC_login
+      Scenario: Login with invalid credential
+        Given user is on the loginPage
+      When user enters invalid email "makeup@cydeo.com" or password "makeup123"
+      And user clicks sign in button
+      Then user sees the error message "Sorry, Wrong Email or Password"
